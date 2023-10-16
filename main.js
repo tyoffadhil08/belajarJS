@@ -51,3 +51,50 @@
 //     console.log(isi)
 //     p.innerText = isi
 // })
+
+let inputBx = document.querySelector('#inputBx');
+let list = document.querySelector('#list');
+
+function addItem() {
+    let value = inputBx.value.trim();
+    if (value !== "") {
+        let listItem = document.createElement("li");
+        listItem.innerHTML = `<span>${value}</span><i></i>`;
+
+        listItem.addEventListener("click", function(){
+            this.classList.toggle('done');
+            updateTextDecoration(this);
+        });
+
+        listItem.querySelector("i").addEventListener("click", function(){
+            listItem.remove();
+        });
+
+        list.appendChild(listItem);
+        inputBx.value = "";
+    }
+}
+
+function updateTextDecoration(item) {
+    let textElement = item.querySelector('span');
+    if (item.classList.contains('done')) {
+        textElement.style.textDecoration = 'line-through';
+    } else {
+        textElement.style.textDecoration = 'none';
+    }
+}
+
+inputBx.addEventListener("keyup", function(event){
+    if(event.key == "Enter") {
+        addItem();
+    }
+});
+
+const deleteButton = document.createElement("button");
+    deleteButton.innerText = "X";
+    deleteButton.classList.add("delete-button");
+
+     deleteButton.addEventListener("click", function () {
+        taskList.removeChild(listItem);
+    });
+ listItem.appendChild(deleteButton);
