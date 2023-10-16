@@ -52,49 +52,46 @@
 //     p.innerText = isi
 // })
 
-let inputBx = document.querySelector('#inputBx');
-let list = document.querySelector('#list');
+document.addEventListener("DOMContentLoaded", function() {
+    const input8x = document.querySelector('#input8x');
+    const list = document.querySelector('#list');
 
-function addItem() {
-    let value = inputBx.value.trim();
-    if (value !== "") {
-        let listItem = document.createElement("li");
-        listItem.innerHTML = `<span>${value}</span><i></i>`;
+    input8x.addEventListener("keyup", function(event) {
+        if (event.key === "Enter" && this.value.trim() !== "") {
+            addItem(this.value.trim());
+            this.value = "";
+        }
+    });
 
-        listItem.addEventListener("click", function(){
+    function addItem(task) {
+        const listItem = document.createElement("li");
+        listItem.innerHTML = task; // Menggunakan innerHTML untuk merender format HTML
+
+        listItem.addEventListener("click", function() {
             this.classList.toggle('done');
-            updateTextDecoration(this);
         });
 
-        listItem.querySelector("i").addEventListener("click", function(){
+        const deleteButton = document.createElement("i");
+        deleteButton.classList.add("delete-button");
+        deleteButton.innerHTML = "&#10006";
+        deleteButton.addEventListener("click", function() {
             listItem.remove();
         });
 
+        listItem.appendChild(deleteButton);
         list.appendChild(listItem);
-        inputBx.value = "";
-    }
-}
-
-function updateTextDecoration(item) {
-    let textElement = item.querySelector('span');
-    if (item.classList.contains('done')) {
-        textElement.style.textDecoration = 'line-through';
-    } else {
-        textElement.style.textDecoration = 'none';
-    }
-}
-
-inputBx.addEventListener("keyup", function(event){
-    if(event.key == "Enter") {
-        addItem();
     }
 });
 
-const deleteButton = document.createElement("button");
-    deleteButton.innerText = "X";
-    deleteButton.classList.add("delete-button");
 
-     deleteButton.addEventListener("click", function () {
-        taskList.removeChild(listItem);
-    });
- listItem.appendChild(deleteButton);
+listItem.addEventListener("click", function(){
+    this.classList.toggle('done');
+});
+
+function addItem(task) {
+    let listItem = document.createElement("li");
+    const parsedTask = parseHTML(task); // Menambahkan fungsi parseHTML
+
+    listItem.appendChild(parsedTask);
+    list.appendChild(listItem);
+}
