@@ -95,3 +95,7 @@ function addItem(task) {
     listItem.appendChild(parsedTask);
     list.appendChild(listItem);
 }
+
+// "<b>ini cetak tebal</b>"//
+//"<u>ini garis bawah</u>"//
+//"<em>ini huruf miring</em>"//
